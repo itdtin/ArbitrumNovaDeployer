@@ -1,0 +1,9 @@
+[
+    {
+        "inputs": [],
+        "name": "MoneyBack",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]

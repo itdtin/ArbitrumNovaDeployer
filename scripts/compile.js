@@ -2,41 +2,16 @@ const path = require('path');
 const fs = require('fs-extra');
 const solc = require('solc');
 
-const sourceFolderPath = path.resolve(__dirname, 'contracts');
-const buildFolderPath = path.resolve(__dirname, 'newContracts');
 
 
-const getContractSource = contractFileName => {
-    const contractPath = path.resolve(__dirname, 'contracts', contractFileName);
-    return fs.readFileSync(contractPath, 'utf8');
-};
+
+
 
 let sources = {};
 
-let walk = function (dir) {
-    let results = [];
-    const list = fs.readdirSync(dir);
-    list.forEach(function (file) {
-        file = dir + '/' + file;
-        const stat = fs.statSync(file);
-        if (stat && stat.isDirectory()) {
-            results = results.concat(walk(file));
-        } else {
-            if (file.substr(file.length - 4, file.length) === ".sol") {
-                sources = {
-                    ...sources,
-                    [file]: {
-                        content: getContractSource(file)
-                    }
-                };
-            }
-            results.push(file);
-        }
-    });
-    return results;
-};
-walk(sourceFolderPath);
 
+walk(sourceFolderPath);
+console.log(sources)
 const input = {
     language: 'Solidity',
     sources,

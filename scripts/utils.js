@@ -36,28 +36,6 @@ module.exports = {
     } catch (e) { console.log(e) }
   },
 
-  isLp: async function(_symbol) {
-    return !!_symbol.includes('-LP')
-  },
-
-  toFixed: function(x) {
-    if (Math.abs(x) < 1.0) {
-      const e = parseInt(x.toString().split('e-')[1])
-      if (e) {
-        x *= Math.pow(10, e - 1)
-        x = '0.' + (new Array(e)).join('0') + x.toString().substring(2)
-      }
-    } else {
-      let e = parseInt(x.toString().split('+')[1])
-      if (e > 20) {
-        e -= 20
-        x /= Math.pow(10, e)
-        x += (new Array(e + 1)).join('0')
-      }
-    }
-    return x
-  },
-
   addressMatch: function(address1, address2) {
     return address1.toLowerCase() === address2.toLowerCase()
   },
@@ -74,7 +52,21 @@ module.exports = {
 
   getFileNameFromPath: function (str) {
     return str.split('\\').pop().split('/').pop();
-  }
+  },
+
+  cleanDir: function(dir) {
+    fs.rmdir(dir, { recursive: true }, err => {
+      if (err) {
+        throw err
+      }
+
+      console.log(`${dir} is deleted!`)
+    })
+  },
+  getRandomFloat: function(min, max, decimals) {
+    const str = (Math.random() * (max - min) + parseFloat(min)).toFixed(decimals);
+    return parseFloat(str);
+}
 
 
 
